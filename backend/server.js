@@ -17,7 +17,9 @@ mongoose.connect(MONGO_URI)
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',  // Adjust if your frontend is on a different port
+}));
 
 app.use("/api/user-comments", commentRoutes);
 app.use("/api/graduation-records", graduateRoutes);
