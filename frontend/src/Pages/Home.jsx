@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ImageSlider from '../components/ImageSlider';
-import CommentBox from '../components/commentBox';
+import CommentBox from '../components/CommentBox';
 import GraduateList from '../components/GraduateList';
 import Sidebar from '../components/Sidebar';
 import Modal from '../components/Modal';

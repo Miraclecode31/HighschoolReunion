@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './Pages/Home';
+import HomePage from './pages/Home';
 
 const LoadingFallback = () => (
   <div className="h-screen w-screen flex items-center justify-center">

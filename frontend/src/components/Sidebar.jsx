@@ -2,14 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, School } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Sidebar = ({ selectedSchool, onSchoolSelect, isLoading = false }) => {
+const Sidebar = ({
+  selectedSchool,
+  onSchoolSelect,
+  isLoading = false
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [schools, setSchools] = useState([]);
 
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/graduationRecords');
+        const response = await fetch('http://localhost:5005/api/graduationRecords');
         if (response.ok) {
           const data = await response.json();
           const schoolsData = data.map(schoolName => ({
@@ -28,27 +32,39 @@ const Sidebar = ({ selectedSchool, onSchoolSelect, isLoading = false }) => {
     fetchSchools();
   }, []);
 
+
   const sidebarVariants = {
-    open: {
-      x: 0,
-      transition: { type: "spring", stiffness: 300, damping: 30 }
-    },
-    closed: {
-      x: "-100%",
-      transition: { type: "spring", stiffness: 300, damping: 30 }
-    }
+      open: {
+          x: 0,
+          transition: {
+              type: "spring",
+              stiffness: 300,
+              damping: 30
+          }
+      },
+      closed: {
+          x: "-100%",
+          transition: {
+              type: "spring",
+              stiffness: 300,
+              damping: 30
+          }
+      }
   };
 
   const overlayVariants = {
-    open: {
-      opacity: 0.5,
-      display: "block"
-    },
-    closed: {
-      opacity: 0,
-      transitionEnd: { display: "none" }
-    }
+      open: {
+          opacity: 0.5,
+          display: "block"
+      },
+      closed: {
+          opacity: 0,
+          transitionEnd: {
+              display: "none"
+          }
+      }
   };
+
 
   return (
     <>
@@ -79,7 +95,7 @@ const Sidebar = ({ selectedSchool, onSchoolSelect, isLoading = false }) => {
             animate="open"
             exit="closed"
             variants={sidebarVariants}
-            className="sidebar-container"  
+            className="fixed top-0 left-0 h-full w-72 bg-neutral-800/70 shadow-xl z-50" // Use the requested background class
           >
             <div className="flex items-center justify-between p-4 border-b border-gray-700">
               <h2 className="text-xl font-semibold text-white flex items-center gap-2">
