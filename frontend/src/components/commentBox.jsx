@@ -10,7 +10,7 @@ const CommentBox = () => {
     useEffect(() => {
         const fetchComments = async () => {
             try {
-                const response = await fetch('http://localhost:5005/api/user-comments');
+                const response = await fetch('http://localhost:4000/api/user-comments');
                 if (response.ok) {
                     const data = await response.json();
                     setComments(data);

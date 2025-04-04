@@ -18,7 +18,7 @@ const GraduateList = ({
       }
       setIsLoading(true);
       try {
-        const response = await fetch(`http://localhost:5005/api/graduationRecords/school/${selectedSchool}`);
+        const response = await fetch(`http://localhost:4000/api/graduation-records/school/${selectedSchool}`);
         if (response.ok) {
           const data = await response.json();
           setGraduates(data);

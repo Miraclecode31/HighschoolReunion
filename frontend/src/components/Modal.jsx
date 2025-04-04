@@ -16,7 +16,7 @@ const Modal = ({ isOpen, onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5005/api/graduationRecords', {
+      const response = await fetch('http://localhost:4000/api/graduation-records', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
