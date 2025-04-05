@@ -3,7 +3,10 @@ import { Send, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const CommentBox = () => {
-    const [comment, setComment] = useState('');
+    const [comment, setComment] = useState({
+        message:'',
+        school: '' 
+    });
     const [comments, setComments] = useState([]);
     const [showComments, setShowComments] = useState(false);
 
@@ -25,16 +28,20 @@ const CommentBox = () => {
         fetchComments();
     }, []);
 
+    const handleChange = (e) => {
+        setComment({ ...comment, [e.target.name]: e.target.value });
+      };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (comment.trim()) {
+        if (comment) {
             try {
                 const response = await fetch('http://localhost:4000/api/user-comments', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ message: comment }),
+                    body: JSON.stringify(comment),
                 });
 
                 if (response.ok) {
@@ -85,9 +92,18 @@ const CommentBox = () => {
                 <form onSubmit={handleSubmit} className="flex items-center">
                     <input
                         type="text"
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
+                        value={comment.message || ''}
+                        name="message"
+                        onChange={handleChange}
                         placeholder="Share your thoughts..."
+                        className="flex-1 px-3 py-1.5 rounded-full bg-white bg-opacity-90 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                    />
+                     <input
+                        type="text"
+                        value={comment.school || ''}
+                        name="school"
+                        onChange={handleChange}
+                        placeholder="Tell Us Your School!"
                         className="flex-1 px-3 py-1.5 rounded-full bg-white bg-opacity-90 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                     />
                     <button
@@ -116,6 +132,7 @@ const CommentList = ({ comments }) => {
                 >
                     <div>
                         <p className="text-white text-sm">{comment.message}</p>
+                        <p className="text-white text-sm">{comment.school}</p>
                         <span className="text-[0.6rem] text-white ml-2 opacity-70">{new Date(comment.createdAt).toLocaleString()}</span>
                     </div>
                 </motion.div>
