@@ -5,8 +5,8 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
   try {
-    const { message } = req.body;
-    const comment = new Comment({ message });
+    const { message, school} = req.body;
+    const comment = new Comment({ message, school});
     await comment.save();
     res.status(201).json(comment);
   } catch (error) {
