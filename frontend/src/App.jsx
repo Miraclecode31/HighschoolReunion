@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import HomePage from './Pages/Home';
+
+const HomePage = React.lazy(() => import('./pages/Home'));
+const SchoolList = React.lazy(() => import('./components/SchoolList'));
+const Sidebar = React.lazy(() => import('./components/Sidebar'));
+const SchoolPage = React.lazy(() => import('./components/schoolPage'));
+const CommentBox = React.lazy(() => import('./components/commentBox'));
 
 const LoadingFallback = () => (
   <div className="h-screen w-screen flex items-center justify-center">
@@ -10,15 +15,22 @@ const LoadingFallback = () => (
 
 const App = () => {
   return (
-    <React.Suspense fallback={<LoadingFallback />}>
+    <Suspense fallback={<LoadingFallback />}>
       <Router>
-        <div className="min-h-screen bg-gray-50">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-          </Routes>
+        <div className="min-h-screen bg-gray-50 flex">
+          <Sidebar /> 
+
+          <main className="p-8 flex-grow">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/schools" element={<SchoolList />} />
+              <Route path="/schools/:schoolId" element={<SchoolPage />} />
+              <Route path="/schools/:schoolId/comments" element={<CommentBox />} />
+            </Routes>
+          </main>
         </div>
       </Router>
-    </React.Suspense>
+    </Suspense>
   );
 };
 
