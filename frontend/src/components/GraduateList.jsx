@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronDown, ChevronUp, Plus, Users } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import "../mystyle.css";
 
 const GraduateList = ({
   selectedSchool,
@@ -50,7 +51,7 @@ const GraduateList = ({
         <div className="flex items-center gap-2">
           <Users size={20} className="text-blue-600" />
           <span className="font-bold text-white">{selectedSchool || 'Select School'}</span>
-          </div>
+        </div>
         {isExpanded ? (
           <ChevronDown size={20} className="text-white" />
         ) : (
@@ -69,11 +70,9 @@ const GraduateList = ({
             style={{ maxHeight: 'calc(3 * 115px + 40px)' }}
           >
             <div className="overflow-y-auto">
-              <div className="">
+              <div>
                 {isLoading ? (
-                  <div className="p-4 text-center text-gray-500">
-                    Loading...
-                  </div>
+                  <div className="p-4 text-center text-gray-500">Loading...</div>
                 ) : graduates.length > 0 ? (
                   <div className="space-y-2 p-2">
                     {graduates.map((graduate) => (
@@ -97,13 +96,18 @@ const GraduateList = ({
               </div>
             </div>
 
-            <button
-              onClick={onOpenModal}
-              className="w-full flex items-center justify-center gap-2 p-3 text-white hover:bg-gray-700 transition-colors border-t border-gray-200 bg-black rounded-b-lg"
-            >
-              <Plus size={20} />
-              <span>Add Yourself</span>
-            </button>
+            <div className="w-full border-t border-gray-200 bg-black rounded-b-lg">
+            <div className="absara flex justify-center items-center p-3 border border-red-500">
+
+                <button
+                  onClick={onOpenModal}
+                  className="flex items-center gap-2 px-4 py-2 text-white bg-gray-800 rounded hover:bg-gray-700 transition"
+                >
+                  <Plus size={20} />
+                  <span className='border border-red-500'>Add Yourself</span>
+                </button>
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

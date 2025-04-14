@@ -2,15 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 const CommentBox = (params) => {
-  const { schoolId } = params;  
+  const { schoolId } = params;
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  // const isValidObjectId = (id) => {
-  //   return /^[0-9a-fA-F]{24}$/.test(id); 
-  // };
 
   useEffect(() => {
     if (!schoolId) {
@@ -18,15 +14,9 @@ const CommentBox = (params) => {
       return;
     }
 
-    // if (!isValidObjectId(schoolId)) {
-    //   console.error('Invalid School ID:', schoolId);
-    //   setError('Invalid School ID');
-    //   return;
-    // }
-
     const fetchComments = async () => {
       setIsLoading(true);
-      setError(null); 
+      setError(null);
 
       try {
         const response = await fetch(`http://localhost:3000/api/schools/${schoolId}/comments`);
@@ -36,7 +26,7 @@ const CommentBox = (params) => {
         } else {
           setError('Failed to fetch comments');
           const data = await response.json();
-          console.log(data)
+          console.log(data);
         }
       } catch (error) {
         setError('Error fetching comments');
@@ -46,7 +36,7 @@ const CommentBox = (params) => {
     };
 
     fetchComments();
-  }, [schoolId]); 
+  }, [schoolId]);
 
   const submitComment = async () => {
     if (!newComment.trim()) {
@@ -54,12 +44,7 @@ const CommentBox = (params) => {
       return;
     }
 
-    setError(null); 
-
-    // if (!isValidObjectId(schoolId)) {
-    //   setError('Invalid School ID');
-    //   return;
-    // }
+    setError(null);
 
     try {
       const response = await fetch(`http://localhost:3000/api/schools/${schoolId}/comments`, {
@@ -108,12 +93,15 @@ const CommentBox = (params) => {
         placeholder="Add a comment"
         className="border p-2 w-full mt-2"
       />
-      <button
-        onClick={submitComment}
-        className="mt-2 p-2 bg-blue-600 text-white rounded"
-      >
-        Add Comment
-      </button>
+
+      <div className="flex justify-center">
+        <button
+          onClick={submitComment}
+          className="mt-2 p-2 bg-blue-600 text-white rounded"
+        >
+          Add Comment
+        </button>
+      </div>
     </div>
   );
 };

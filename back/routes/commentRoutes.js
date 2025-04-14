@@ -4,6 +4,22 @@ const Comment = require("../models/Comment");
 
 const router = express.Router();
 
+router.post("/", async (req, res) => {
+  try {
+    const { messages } = req.body;
+    if (!messages || !Array.isArray(messages)) {
+      return res.status(400).json({ message: "Please provide an array of comments." });
+    }
+    const comments = await Comment.insertMany(messages.map(msg => ({
+      message: msg.message,
+      school: msg.school
+    })));
+    res.status(201).json(comments);
+  } catch (error) {
+    res.status(500).json({ message: "Error adding comments", error });
+  }
+});
+
 router.post("/:schoolId/comments", async (req, res) => {
   const { schoolId } = req.params;
   const { commentText } = req.body;

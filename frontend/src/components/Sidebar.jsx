@@ -1,31 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Menu, X, School } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Sidebar = ({ selectedSchool, onSchoolSelect, isLoading = false }) => {
+const Sidebar = ({ selectedSchool, onSchoolSelect, isLoading = false, schools = [] }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [schools, setSchools] = useState([]);
-  const [isLoadingState, setIsLoadingState] = useState(isLoading);
-
-  useEffect(() => {
-    const fetchSchools = async () => {
-      try {
-        setIsLoadingState(true);
-        const response = await fetch('http://localhost:3000/api/schools');
-        if (!response.ok) {
-          throw new Error('Failed to fetch schools');
-        }
-        const data = await response.json();
-        setSchools(data);
-      } catch (error) {
-        console.error('Error fetching schools:', error.message);
-      } finally {
-        setIsLoadingState(false);
-      }
-    };
-
-    fetchSchools();
-  }, []);
 
   const sidebarVariants = {
     open: { x: 0, transition: { type: 'spring', stiffness: 300, damping: 30 } },
@@ -48,7 +26,7 @@ const Sidebar = ({ selectedSchool, onSchoolSelect, isLoading = false }) => {
       </button>
 
       <AnimatePresence>
-        {isOpen && (
+        {isOpen ? (
           <motion.div
             initial="closed"
             animate="open"
@@ -57,11 +35,11 @@ const Sidebar = ({ selectedSchool, onSchoolSelect, isLoading = false }) => {
             onClick={() => setIsOpen(false)}
             className="fixed inset-0 bg-black z-40"
           />
-        )}
+        ) : null}
       </AnimatePresence>
 
       <AnimatePresence>
-        {isOpen && (
+        {isOpen ? (
           <motion.div
             initial="closed"
             animate="open"
@@ -84,13 +62,13 @@ const Sidebar = ({ selectedSchool, onSchoolSelect, isLoading = false }) => {
             </div>
 
             <div className="overflow-y-auto h-[calc(100vh-70px)] p-2">
-              {isLoadingState ? (
+              {isLoading ? (
                 <div className="flex items-center justify-center h-32 text-gray-500">Loading schools...</div>
               ) : schools.length > 0 ? (
                 <div className="space-y-2">
                   {schools.map((school, index) => (
                     <motion.button
-                      key={school._id || index}
+                      key={school.id || index}
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => {
@@ -99,7 +77,7 @@ const Sidebar = ({ selectedSchool, onSchoolSelect, isLoading = false }) => {
                       }}
                       className="block w-full p-4 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors text-left"
                     >
-                      <span className="font-medium">{school}</span>
+                      <span className="font-medium">{school.name}</span>
                     </motion.button>
                   ))}
                 </div>
@@ -108,7 +86,7 @@ const Sidebar = ({ selectedSchool, onSchoolSelect, isLoading = false }) => {
               )}
             </div>
           </motion.div>
-        )}
+        ) : null}
       </AnimatePresence>
     </>
   );

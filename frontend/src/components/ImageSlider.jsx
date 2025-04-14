@@ -46,7 +46,7 @@ const ImageSlider = () => {
   React.useEffect(() => {
     const timer = setInterval(() => {
       paginate(1);
-    }, 5000);
+    }, 60000);
 
     return () => clearInterval(timer);
   }, []);
@@ -87,7 +87,7 @@ const ImageSlider = () => {
         </motion.div>
       </AnimatePresence>
 
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center space-x-4">
+      <div className="absolute center-4 left-1/4 transform -translate-x-1/2 flex items-center space-x-4">
         <button
           onClick={() => paginate(-1)}
           className="p-2 rounded-full bg-black bg-opacity-50 text-white hover:bg-opacity-75 transition-all"
