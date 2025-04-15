@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, School } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import '../filmon.css'
 
 const Sidebar = ({
   selectedSchool,
@@ -69,8 +70,8 @@ const Sidebar = ({
   return (
     <>
       <button
-        onClick={() => setIsOpen(true)}
-        className="fixed top-4 left-4 z-30 p-2 rounded-lg bg-white bg-opacity-90 hover:bg-opacity-100 shadow-lg transition-all"
+      onClick={() => setIsOpen(prev => !prev)}
+        className="filmon-nav fixed top-4 left-4 z-30 p-2 rounded-lg bg-white bg-opacity-90 hover:bg-opacity-100 shadow-lg transition-all"
       >
         <Menu size={24} />
       </button>
@@ -97,20 +98,19 @@ const Sidebar = ({
             variants={sidebarVariants}
             className="fixed top-0 left-0 h-full w-72 bg-neutral-800/70 shadow-xl z-50" // Use the requested background class
           >
-            <div className="flex items-center justify-between p-4 border-b border-gray-700">
-              <h2 className="text-xl font-semibold text-white flex items-center gap-2">
-                <School className="text-blue-600" />
-                Schools
-              </h2>
-              <button
-                onClick={() => setIsOpen(false)}
-                className="p-2 rounded-lg hover:bg-gray-700 transition-colors text-white"
-              >
-                <X size={24} />
-              </button>
-            </div>
 
-            <div className="overflow-y-auto h-[calc(100vh-70px)] p-2">
+                <div className=" filmon-nav-container flex items-center justify-between p-4 border-b border-gray-700">
+                <h2 className="text-xl font-semibold text-white flex items-center gap-2">
+                  
+                  
+                </h2>
+   
+              </div>
+          
+
+            <div className="filmon-nav2 overflow-y-auto h-[calc(100vh-70px)] p-2">
+            
+
               {isLoading ? (
                 <div className="flex items-center justify-center h-32 text-gray-500">
                   Loading schools...
@@ -128,6 +128,7 @@ const Sidebar = ({
                       }}
                       className="block w-full p-4 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors text-left"
                     >
+                    
                       <span className="font-medium">{school.name}</span>
                     </motion.button>
                   ))}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Send, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import '../filmon.css'
 
 const CommentBox = () => {
     const [comment, setComment] = useState({
@@ -58,7 +59,7 @@ const CommentBox = () => {
     };
 
     return (
-        <div className="fixed bottom-20 left-0 right-0 px-4">
+        <div className="filmon-comment fixed bottom-20 left-0 right-0 px-4">
             <AnimatePresence>
                 {showComments && (
                     <motion.div
@@ -68,7 +69,8 @@ const CommentBox = () => {
                         transition={{ duration: 0.3 }}
                         className="max-w-md mx-auto mb-4"
                     >
-                        <div className="max-h-40 overflow-y-auto">
+                        <div className="filmon-comment-scroll max-h-40 overflow-y-auto">
+            
                             {comments.length === 0 ? (
                                 <p className="text-center py-2 text-gray-500">No comments yet</p>
                             ) : (
@@ -90,13 +92,14 @@ const CommentBox = () => {
 
             <div className="max-w-sm mx-auto mb-4">
                 <form onSubmit={handleSubmit} className="flex items-center">
+                    
                     <input
                         type="text"
                         value={comment.message || ''}
                         name="message"
                         onChange={handleChange}
                         placeholder="Share your thoughts..."
-                        className="flex-1 px-3 py-1.5 rounded-full bg-white bg-opacity-90 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="filmon-comment-input flex-1 px-3 py-1.5 rounded-full bg-white bg-opacity-90 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                     />
                      <input
                         type="text"
@@ -104,7 +107,7 @@ const CommentBox = () => {
                         name="school"
                         onChange={handleChange}
                         placeholder="Tell Us Your School!"
-                        className="flex-1 px-3 py-1.5 rounded-full bg-white bg-opacity-90 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+                        className="filmon-comment-input flex-1 px-3 py-1.5 rounded-full bg-white bg-opacity-90 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                     />
                     <button
                         type="submit"
@@ -130,10 +133,10 @@ const CommentList = ({ comments }) => {
                     animate={{ opacity: 1, y: 0 }}
                     className="p-3 flex justify-between items-start bg-transparent rounded-lg shadow-md border border-gray-300"
                 >
-                    <div>
-                        <p className="text-white text-sm">{comment.message}</p>
-                        <p className="text-white text-sm">{comment.school}</p>
-                        <span className="text-[0.6rem] text-white ml-2 opacity-70">{new Date(comment.createdAt).toLocaleString()}</span>
+                    <div className='filmon-comment-container'>
+                        <p className="filmon-comment-message text-white text-sm">{comment.message}</p>
+{/* <span className="text-[0.6rem] text-white ml-2 opacity-70">{new Date(comment.createdAt).toLocaleString()}</span> */}
+
                     </div>
                 </motion.div>
             ))}

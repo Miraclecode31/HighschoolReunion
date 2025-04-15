@@ -18,7 +18,7 @@ const HomePage = () => {
 
   return (
     <div className="relative h-screen overflow-hidden">
-      <ImageSlider />
+    <ImageSlider />
 
       <Sidebar
         schools={schools}

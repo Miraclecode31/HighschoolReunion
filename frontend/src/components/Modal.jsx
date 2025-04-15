@@ -45,7 +45,7 @@ const Modal = ({ isOpen, onClose }) => {
 
   return (
       <div
-          className={`fixed inset-0 z-50 bg-neutral-800/70 flex justify-center items-center overflow-y-auto p-3 ${
+          className={`filmon-graduate-add fixed inset-0 z-50 bg-neutral-800/70 flex justify-center items-center overflow-y-auto p-3 ${
               isOpen ? "visible opacity-100" : "invisible opacity-0"
           } transition-opacity duration-300`}
           onClick={handleClose}
@@ -57,18 +57,19 @@ const Modal = ({ isOpen, onClose }) => {
               onClick={(e) => e.stopPropagation()}
           >
               <div className="w-full">
+              <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+              <X size={24} />
+          </button>
                   <div className="flex justify-between items-center mb-4">
                       <h2 className="text-xl font-bold">Add Yourself</h2>
-                      <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
-                          <X size={24} />
-                      </button>
+                 
                   </div>
                   <form onSubmit={handleSubmit} className="space-y-4">
                       <div>
-                          <label className="block text-sm font-medium text-gray-700">Name</label>
                           <input
                               type="text"
                               name="name"
+                              placeholder='Name'
                               value={formData.name}
                               onChange={handleChange}
                               className="mt-1 block w-full rounded-md border border-gray-300 p-2"
@@ -76,10 +77,10 @@ const Modal = ({ isOpen, onClose }) => {
                           />
                       </div>
                       <div>
-                          <label className="block text-sm font-medium text-gray-700">Graduation Year</label>
                           <input
                               type="number"
                               name="graduationYear"
+                              placeholder='Graduation Year'
                               value={formData.graduationYear}
                               onChange={handleChange}
                               className="mt-1 block w-full rounded-md border border-gray-300 p-2"
@@ -87,10 +88,10 @@ const Modal = ({ isOpen, onClose }) => {
                           />
                       </div>
                       <div>
-                          <label className="block text-sm font-medium text-gray-700">School</label>
                           <input
                               type="text"
                               name="school"
+                              placeholder='School'
                               value={formData.school}
                               onChange={handleChange}
                               className="mt-1 block w-full rounded-md border border-gray-300 p-2"
@@ -98,10 +99,10 @@ const Modal = ({ isOpen, onClose }) => {
                           />
                       </div>
                       <div>
-                          <label className="block text-sm font-medium text-gray-700">CCL Year</label>
                           <input
                               type="number"
                               name="cclYear"
+                              placeholder='CCL Year'
                               value={formData.cclYear}
                               onChange={handleChange}
                               className="mt-1 block w-full rounded-md border border-gray-300 p-2"

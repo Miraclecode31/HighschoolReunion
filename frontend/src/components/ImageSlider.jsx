@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import '../filmon.css'; 
 
 const ImageSlider = () => {
   const images = [
-    { url: 'graduates.jpg', alt: 'Slide 1' },
-    { url: 'person.jpg', alt: 'Slide 2' },
+    { url: 'high1.jpg', alt: 'Slide 1' },
+    { url: 'high2.jpg', alt: 'Slide 2' },
+    { url: 'high3.jpg', alt: 'Slide 2' },
+    { url: 'high4.jpg', alt: 'Slide 2' },
+    { url: 'high6.jpg', alt: 'Slide 2' },
+    { url: 'high9.jpg', alt: 'Slide 2' },
   ];
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -13,7 +18,7 @@ const ImageSlider = () => {
 
   const slideVariants = {
     enter: (direction) => ({
-      x: direction > 0 ? 1000 : -1000,
+      x: direction > 0 ? 0 : -0,
       opacity: 0
     }),
     center: {
@@ -23,7 +28,7 @@ const ImageSlider = () => {
     },
     exit: (direction) => ({
       zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
+      x: direction < 0 ? 0 : 0,
       opacity: 0
     })
   };
@@ -45,14 +50,16 @@ const ImageSlider = () => {
 
   React.useEffect(() => {
     const timer = setInterval(() => {
-      paginate(1);
+      // paginate(1);
     }, 5000);
 
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <div className="relative h-screen w-full overflow-hidden">
+    <div className="filmon">
+
+    
       <AnimatePresence initial={false} custom={direction}>
       <motion.div
   key={currentIndex}
@@ -76,47 +83,57 @@ const ImageSlider = () => {
       paginate(-1);
     }
   }}
-  className="absolute w-full h-full flex justify-center items-center"
+  className="filmon-image-container"
 >
-  <img 
-    src={images[currentIndex].url} 
-    alt={images[currentIndex].alt} 
-    className="w-auto h-auto max-w-full max-h-full object-contain mx-auto my-auto"
+<div className="filmon-image-container2">
+
+<img 
+src={images[currentIndex].url} 
+alt={images[currentIndex].alt} 
+className="filmon-image"
 />
+
+<div className="filmon-image-controls">
+<button
+  onClick={() => paginate(-1)}
+  className="filmon-image-arrows p-2 rounded-full bg-black bg-opacity-50 hover:bg-opacity-75 transition-all"
+>
+  <ChevronLeft size={24} />
+</button>
+
+<div className="">
+  {images.map((_, index) => (
+    <button
+      key={index}
+      onClick={() => {
+        setDirection(index > currentIndex ? 1 : -1);
+        setCurrentIndex(index);
+      }}
+      className={`filmon-image-pagination ${
+        index === currentIndex ? 'bg-white' : 'bg-white bg-opacity-50'
+      }`}
+    />
+  ))}
+</div>
+
+<button
+  onClick={() => paginate(1)}
+  className="filmon-image-arrows p-2 rounded-full bg-black bg-opacity-50 text-white hover:bg-opacity-75 transition-all"
+>
+  <ChevronRight size={24} />
+</button>
+</div>
+
+
+</div>
+
+
+
 </motion.div>
 
       </AnimatePresence>
 
-      <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex items-center space-x-4">
-        <button
-          onClick={() => paginate(-1)}
-          className="p-2 rounded-full bg-black bg-opacity-50 text-white hover:bg-opacity-75 transition-all"
-        >
-          <ChevronLeft size={24} />
-        </button>
 
-        <div className="flex space-x-2">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setDirection(index > currentIndex ? 1 : -1);
-                setCurrentIndex(index);
-              }}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === currentIndex ? 'bg-white' : 'bg-white bg-opacity-50'
-              }`}
-            />
-          ))}
-        </div>
-
-        <button
-          onClick={() => paginate(1)}
-          className="p-2 rounded-full bg-black bg-opacity-50 text-white hover:bg-opacity-75 transition-all"
-        >
-          <ChevronRight size={24} />
-        </button>
-      </div>
     </div>
   );
 };

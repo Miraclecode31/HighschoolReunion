@@ -42,7 +42,7 @@ const GraduateList = ({
   };
 
   return (
-    <div className="fixed bottom-20 right-4 max-w-sm w-full">
+    <div className="filmon-graduate">
       <button
         onClick={toggleExpand}
         className="w-full flex items-center justify-between p-4 bg-black bg-opacity-30 text-white rounded-t-lg shadow-lg hover:bg-opacity-50 transition-all"
@@ -69,7 +69,7 @@ const GraduateList = ({
             className="rounded-b-lg bg-neutral-800/70 flex flex-col"
             style={{ maxHeight: 'calc(3 * 115px + 40px)' }}
           >
-            <div className="overflow-y-auto">
+            <div className="overflow-y-auto ">
               <div className="">
                 {isLoading ? (
                   <div className="p-4 text-center text-gray-500">
