@@ -1,124 +1,149 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Menu, X, School } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import '../filmon.css'
 
-const ImageSlider = () => {
-  const images = [
-    { url: 'graduates.jpg', alt: 'Slide 1' },
-    { url: 'person.jpg', alt: 'Slide 2' },
-  ];
+const Sidebar = ({
+  selectedSchool,
+  onSchoolSelect,
+  isLoading = false
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [schools, setSchools] = useState([]);
 
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [direction, setDirection] = useState(0);
+  useEffect(() => {
+    const fetchSchools = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/api/graduation-records');
+        if (response.ok) {
+          const data = await response.json();
+          const schoolsData = data.map(schoolName => ({
+            _id: schoolName,
+            name: schoolName
+          }));
+          setSchools(schoolsData);
+        } else {
+          console.error('Failed to fetch schools:', response.status);
+        }
+      } catch (error) {
+        console.error('Error fetching schools:', error);
+      }
+    };
 
-  const slideVariants = {
-    enter: (direction) => ({
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0
-    }),
-    center: {
-      zIndex: 1,
-      x: 0,
-      opacity: 1
-    },
-    exit: (direction) => ({
-      zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0
-    })
-  };
-
-  const swipeConfidenceThreshold = 10000;
-  const swipePower = (offset, velocity) => {
-    return Math.abs(offset) * velocity;
-  };
-
-  const paginate = (newDirection) => {
-    setDirection(newDirection);
-    setCurrentIndex((prevIndex) => {
-      let newIndex = prevIndex + newDirection;
-      if (newIndex >= images.length) newIndex = 0;
-      if (newIndex < 0) newIndex = images.length - 1;
-      return newIndex;
-    });
-  };
-
-  React.useEffect(() => {
-    const timer = setInterval(() => {
-      paginate(1);
-    }, 60000);
-
-    return () => clearInterval(timer);
+    fetchSchools();
   }, []);
 
-  return (
-    <div className="relative h-screen w-full overflow-hidden">
-      <AnimatePresence initial={false} custom={direction}>
-        <motion.div
-          key={currentIndex}
-          custom={direction}
-          variants={slideVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{
-            x: { type: "spring", stiffness: 300, damping: 30 },
-            opacity: { duration: 0.2 }
-          }}
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={1}
-          onDragEnd={(e, { offset, velocity }) => {
-            const swipe = swipePower(offset.x, velocity.x);
 
-            if (swipe < -swipeConfidenceThreshold) {
-              paginate(1);
-            } else if (swipe > swipeConfidenceThreshold) {
-              paginate(-1);
-            }
-          }}
-          className="absolute w-full h-full"
-        >
-          <img
-            src={images[currentIndex].url}
-            alt={images[currentIndex].alt}
-            className="w-full h-full object-cover"
+  const sidebarVariants = {
+      open: {
+          x: 0,
+          transition: {
+              type: "spring",
+              stiffness: 300,
+              damping: 30
+          }
+      },
+      closed: {
+          x: "-100%",
+          transition: {
+              type: "spring",
+              stiffness: 300,
+              damping: 30
+          }
+      }
+  };
+
+  const overlayVariants = {
+      open: {
+          opacity: 0.5,
+          display: "block"
+      },
+      closed: {
+          opacity: 0,
+          transitionEnd: {
+              display: "none"
+          }
+      }
+  };
+
+
+  return (
+    <>
+      <button
+      onClick={() => setIsOpen(prev => !prev)}
+        className="filmon-nav fixed top-4 left-4 z-30 p-2 rounded-lg bg-white bg-opacity-90 hover:bg-opacity-100 shadow-lg transition-all"
+      >
+        <Menu size={24} />
+      </button>
+{/* {console.log(schools[0])} */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={overlayVariants}
+            onClick={() => setIsOpen(false)}
+            className="fixed inset-0 bg-black z-40"
           />
-        </motion.div>
+        )}
       </AnimatePresence>
 
-      <div className="absolute center-4 left-1/4 transform -translate-x-1/2 flex items-center space-x-4">
-        <button
-          onClick={() => paginate(-1)}
-          className="p-2 rounded-full bg-black bg-opacity-50 text-white hover:bg-opacity-75 transition-all"
-        >
-          <ChevronLeft size={24} />
-        </button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial="closed"
+            animate="open"
+            exit="closed"
+            variants={sidebarVariants}
+            className="fixed top-0 left-0 h-full w-72 bg-neutral-800/70 shadow-xl z-50" // Use the requested background class
+          >
 
-        <div className="flex space-x-2">
-          {images.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setDirection(index > currentIndex ? 1 : -1);
-                setCurrentIndex(index);
-              }}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === currentIndex ? 'bg-white' : 'bg-white bg-opacity-50'
-              }`}
-            />
-          ))}
-        </div>
+                <div className=" filmon-nav-container flex items-center justify-between p-4 border-b border-gray-700">
+                <h2 className="text-xl font-semibold text-white flex items-center gap-2">
+                  
+                  
+                </h2>
+   
+              </div>
+          
 
-        <button
-          onClick={() => paginate(1)}
-          className="p-2 rounded-full bg-black bg-opacity-50 text-white hover:bg-opacity-75 transition-all"
-        >
-          <ChevronRight size={24} />
-        </button>
-      </div>
-    </div>
+            <div className="filmon-nav2 overflow-y-auto h-[calc(100vh-70px)] p-2">
+            
+
+              {isLoading ? (
+                <div className="flex items-center justify-center h-32 text-gray-500">
+                  Loading schools...
+                </div>
+              ) : schools.length > 0 ? (
+                <div className="space-y-2">
+                  {schools.map((school) => (
+                    <motion.button
+                      key={school._id}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => {
+                        onSchoolSelect(school);
+                        setIsOpen(false);
+                      }}
+                      className="block w-full p-4 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors text-left"
+                    >
+                    
+                      <span className="font-medium">{school.name}</span>
+                    </motion.button>
+                  ))}
+                </div>
+              ) : (
+                <div className="flex items-center justify-center h-32 text-gray-500">
+                  No schools found
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
-export default ImageSlider;
+export default Sidebar;

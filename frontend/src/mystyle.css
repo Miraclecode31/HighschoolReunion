@@ -1,4 +1,150 @@
 .absara{
+    width: 100vw;
+}
+
+.absara-image{
+    background-color: rgba(0, 0, 0, 0.5);
+    filter: brightness(50%);
+    width: 100vw;
+    height: 110vh;
+}
+
+.absara-image-container{
+    width: 100vw;
+}
+
+.absara-image-container2{
+   /* styles to be added later */
+}
+
+.absara-image-controls{
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    position: relative;
+    bottom: 200px;
+}
+
+.absara-image-arrows{
+    background-color: white;
+    color: black;
+}
+
+.absara-image-pagination{
+    width: 20px;
+    height: 20px;
+    padding: 0px;
+    margin: 20px;
+    border-radius: 50%;
     border: solid;
-    border-color: red;
+    border-color: white;
+}
+
+.absara-nav{
+    position: absolute;
+    top:20px;
+    left: 20px;
+}
+
+.absara-nav-container{
+    display: flex;
+}
+
+.absara-nav2{
+    position: absolute;
+    top:80px;
+    left: 20px;
+}
+
+.absara-nav2 button{
+    display:block;
+    margin-top: .7em;
+    background-color: white;
+    color: black;
+}
+
+.absara-comment{
+    position: absolute;
+    bottom: 400px;
+    display: flex;
+    width: 100vw;
+    flex-direction: column;
+    align-items: center;
+    overflow: 'auto';
+    max-height: '200px';
+}
+
+.absara-comment-input{
+    padding: 1.3em;
+    border-radius: 24px;
+    background-color: white;
+    border: none;
+    margin:1em;
+    color: black;
+}
+
+
+.absara-comment-message{
+    background-color: rgba(0, 0, 0, 0.376);
+    padding: 1.2em;
+    border-radius: 7px;
+    color: white;
+    max-width: 400px;
+}
+
+
+.absara-comment-scroll{
+    overflow: auto;
+    max-height: 400px;
+    padding: 1em;
+}
+
+.absara-comment-scroll::-webkit-scrollbar {
+    width: 6px; 
   }
+  
+  .absara-comment-scroll::-webkit-scrollbar-track {
+    background: transparent; 
+  }
+  
+  .absara-comment-scroll::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.376); 
+    border-radius: 10px;
+  }
+  
+  .absara-comment-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.376);
+  }
+  
+  .absara-comment-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: #888 transparent;
+  }
+
+.absara-graduate{
+    position: absolute;
+    top: 40px;
+    right: 40px;
+}
+
+
+.absara-graduate-add{
+    background-color: white;
+    padding: 1.5em;
+    border-radius: 12px;
+    color: black;
+    position: absolute;
+    top: 200px;
+    right: 40px;
+    width: 300px;
+}
+
+
+.absara-graduate-add input{
+    background-color: white;
+    padding: 1em;
+    border-radius: 12px;
+    color: black;
+    margin-bottom: 1em;
+    margin-top: 1em;
+}
