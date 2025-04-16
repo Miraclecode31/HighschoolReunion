@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, School } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import '../filmon.css'
+import '../mystyle.css'
 
 const Sidebar = ({
   selectedSchool,
@@ -71,7 +71,7 @@ const Sidebar = ({
     <>
       <button
       onClick={() => setIsOpen(prev => !prev)}
-        className="filmon-nav fixed top-4 left-4 z-30 p-2 rounded-lg bg-white bg-opacity-90 hover:bg-opacity-100 shadow-lg transition-all"
+        className="absara-nav fixed top-4 left-4 z-30 p-2 rounded-lg bg-white bg-opacity-90 hover:bg-opacity-100 shadow-lg transition-all"
       >
         <Menu size={24} />
       </button>
@@ -99,7 +99,7 @@ const Sidebar = ({
             className="fixed top-0 left-0 h-full w-72 bg-neutral-800/70 shadow-xl z-50" // Use the requested background class
           >
 
-                <div className=" filmon-nav-container flex items-center justify-between p-4 border-b border-gray-700">
+                <div className=" absara-nav-container flex items-center justify-between p-4 border-b border-gray-700">
                 <h2 className="text-xl font-semibold text-white flex items-center gap-2">
                   
                   
@@ -108,7 +108,7 @@ const Sidebar = ({
               </div>
           
 
-            <div className="filmon-nav2 overflow-y-auto h-[calc(100vh-70px)] p-2">
+            <div className="absara-nav2 overflow-y-auto h-[calc(100vh-70px)] p-2">
             
 
               {isLoading ? (
