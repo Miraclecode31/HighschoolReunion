@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ChevronDown, ChevronUp, Plus, Users } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const GraduateList = ({
-  selectedSchool,
-  onOpenModal,
-}) => {
+const GraduateList = ({ selectedSchool, onOpenModal }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [graduates, setGraduates] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -13,7 +10,7 @@ const GraduateList = ({
   useEffect(() => {
     const fetchGraduates = async () => {
       if (!selectedSchool) {
-        setGraduates([]);
+        setGraduates([]); // Clear graduates if no school is selected
         return;
       }
       setIsLoading(true);
@@ -21,6 +18,7 @@ const GraduateList = ({
         const response = await fetch(`http://localhost:4000/api/graduation-records/school/${selectedSchool}`);
         if (response.ok) {
           const data = await response.json();
+          console.log('Fetched graduates:', data); // Debug log for fetched data
           setGraduates(data);
         } else {
           console.error('Failed to fetch graduates:', response.status);
@@ -35,7 +33,7 @@ const GraduateList = ({
     };
 
     fetchGraduates();
-  }, [selectedSchool]);
+  }, [selectedSchool]); // Re-run when selectedSchool changes
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -50,8 +48,7 @@ const GraduateList = ({
         <div className="flex items-center gap-2">
           <Users size={20} className="text-blue-600" />
           <span className="font-bold text-white">{selectedSchool || 'Select School'}</span>
-         {console.log(selectedSchool)}
-          </div>
+        </div>
         {isExpanded ? (
           <ChevronDown size={20} className="text-white" />
         ) : (
@@ -69,7 +66,7 @@ const GraduateList = ({
             className="rounded-b-lg bg-neutral-800/70 flex flex-col"
             style={{ maxHeight: 'calc(3 * 115px + 40px)' }}
           >
-            <div className="overflow-y-auto ">
+            <div className="overflow-y-auto">
               <div className="">
                 {isLoading ? (
                   <div className="p-4 text-center text-gray-500">

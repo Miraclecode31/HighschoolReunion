@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/Home';
+import SchoolPage from './pages/schoolPage';
+
 
 const LoadingFallback = () => (
   <div className="h-screen w-screen flex items-center justify-center">
@@ -15,6 +17,7 @@ const App = () => {
         <div className="min-h-screen bg-gray-50">
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/school/:schoolName" element={<SchoolPage />} /> {/* Define the route for the school page */}
           </Routes>
         </div>
       </Router>
