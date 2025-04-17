@@ -21,6 +21,7 @@ app.use(express.json());
 app.use("/api", commentRoutes);
 app.use("/api", graduateRoutes);
 
+
 app.post('/api/schools', async (req, res) => {
   try {
     const { name, location, address } = req.body;

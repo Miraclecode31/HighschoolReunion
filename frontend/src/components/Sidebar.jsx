@@ -14,7 +14,7 @@ const Sidebar = ({
   useEffect(() => {
     const fetchSchools = async () => {
       try {
-        const response = await fetch('http://localhost:3000/api/graduation-records');
+        const response = await fetch('http://localhost:3000/api/graduationRecords');
         if (response.ok) {
           const data = await response.json();
           const schoolsData = data.map(schoolName => ({

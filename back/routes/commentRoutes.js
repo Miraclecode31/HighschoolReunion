@@ -20,6 +20,15 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  try {
+    const comments = await Comment.find();
+    res.json(comments);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching comments", error });
+  }
+});
+
 router.post("/:schoolId/comments", async (req, res) => {
   const { schoolId } = req.params;
   const { commentText } = req.body;
