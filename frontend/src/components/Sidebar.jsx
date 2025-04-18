@@ -35,7 +35,6 @@ const Sidebar = ({
     fetchSchools();
   }, []);
 
-
   const sidebarVariants = {
     open: {
       x: 0,

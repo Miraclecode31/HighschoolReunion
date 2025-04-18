@@ -1,28 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useParams, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import ImageSlider from '../components/ImageSlider';
 import CommentBox from '../components/commentBox';
 import GraduateList from '../components/GraduateList';
 import Modal from '../components/Modal';
+import { schoolImages } from '../constants/schoolData';
 
 const SchoolPage = () => {
   const { schoolName } = useParams();
-  const navigate = useNavigate(); // Initialize the navigate function
-  console.log("School name from URL:", schoolName);
+  const navigate = useNavigate();
+  const schoolImgs = schoolImages
+
   const [graduates, setGraduates] = useState([]);
   const [comments, setComments] = useState([]);
   const [schools, setSchools] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Fetch school data and comments when the component mounts
   useEffect(() => {
+    console.log('School Name:', schoolName);
+
     const fetchSchoolData = async () => {
       try {
         const response = await fetch(`http://localhost:4000/api/graduation-records/school/${encodeURIComponent(schoolName)}`);
         const data = await response.json();
-        console.log('Fetched graduates data:', data);
         setGraduates(data);
+        console.log('Graduates:', data);
       } catch (error) {
         console.error('Error fetching graduates:', error);
       }
@@ -34,6 +37,7 @@ const SchoolPage = () => {
         const data = await response.json();
         const filtered = data.filter(comment => comment.school === schoolName);
         setComments(filtered);
+        console.log('Filtered Comments:', filtered);
       } catch (error) {
         console.error('Error fetching comments:', error);
       }
@@ -44,6 +48,7 @@ const SchoolPage = () => {
         const response = await fetch('http://localhost:4000/api/graduation-records');
         const data = await response.json();
         setSchools(data);
+        console.log('Schools:', data);
       } catch (error) {
         console.error('Error fetching schools:', error);
       }
@@ -55,48 +60,67 @@ const SchoolPage = () => {
   }, [schoolName]);
 
   const handleSchoolSelect = (school) => {
-    // Handle selecting a school (could use for other purposes)
+    // Optional: Handle selecting a school
   };
 
-  // Function to handle navigating back to home page
   const goToHomePage = () => {
-    navigate('/'); // Navigate to the home page ("/")
+    navigate('/');
+  };
+
+  const handleHomeClick = () => {
+    console.log("Home Button clicked!");
+    goToHomePage();
   };
 
   return (
-    <div className="relative h-screen overflow-hidden">
-      {/* Home Button */}
-      <button
-        onClick={goToHomePage}
-        className="absolute top-4 left-4 p-2 bg-blue-600 text-white rounded-full"
+    <div className="relative h-screen">
+
+      <div>
+        <div className="relative top-0 left-0 right-0 z-10">
+          <ImageSlider images={schoolImgs[schoolName]} />
+        </div>
+
+      </div>
+
+
+      {/* <button
+        onClick={handleHomeClick}
+        className="absolute top-4 left-4 p-3 bg-blue-600 text-white rounded-full shadow-lg z-[9999]"
       >
         Home
-      </button>
-
+      </button> */}
 
       {/* Sidebar */}
-      <Sidebar
-        schools={schools}
-        selectedSchool={schoolName}
-        onSchoolSelect={handleSchoolSelect}
-        isLoading={false}
-      />
+      <div className="relative z-20">
 
-      <div className="relative z-10">
+        <Sidebar
+          schools={schools}
+          selectedSchool={schoolName}
+          onSchoolSelect={handleSchoolSelect}
+          isLoading={false}
+        />
+      </div>
+
+      {/* Comment Box and Graduate List */}
+      <div className="relative z-20">
         <div className="absolute bottom-0 left-0 right-0">
           <CommentBox />
         </div>
 
-         {/* ImageSlider */}
-      <ImageSlider />
-
-        {/* Graduate List */}
         <GraduateList
           graduates={graduates}
           selectedSchool={schoolName}
           onOpenModal={() => setIsModalOpen(true)}
           isLoading={false}
         />
+
+        <button
+        onClick={handleHomeClick}
+        className="absolute top-4 left-4 p-3 bg-blue-600 text-white rounded-full shadow-lg z-[9999]"
+        >
+        Home
+        </button>
+
       </div>
 
       {/* Modal */}
