@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import ImageSlider from '../components/ImageSlider';
 import CommentBox from '../components/commentBox';
 import GraduateList from '../components/GraduateList';
 import Modal from '../components/Modal';
 import { schoolImages } from '../constants/schoolData';
+import HomeButton from '../components/homeButton';
 
 const SchoolPage = () => {
   const { schoolName } = useParams();
-  const navigate = useNavigate();
-  const schoolImgs = schoolImages
+  const schoolImgs = schoolImages;
 
   const [graduates, setGraduates] = useState([]);
   const [comments, setComments] = useState([]);
@@ -63,36 +63,19 @@ const SchoolPage = () => {
     // Optional: Handle selecting a school
   };
 
-  const goToHomePage = () => {
-    navigate('/');
-  };
-
-  const handleHomeClick = () => {
-    console.log("Home Button clicked!");
-    goToHomePage();
-  };
-
   return (
-    <div className="relative h-screen">
+    <div className="relative h-screen overflow-hidden">
 
-      <div>
-        <div className="relative top-0 left-0 right-0 z-10">
-          <ImageSlider images={schoolImgs[schoolName]} />
-        </div>
+      {/* Home Button as its own component */}
+      <HomeButton />
 
+      {/* Image Slider */}
+      <div className="relative top-0 left-0 right-0 z-10">
+        <ImageSlider images={schoolImgs[schoolName]} />
       </div>
-
-
-      {/* <button
-        onClick={handleHomeClick}
-        className="absolute top-4 left-4 p-3 bg-blue-600 text-white rounded-full shadow-lg z-[9999]"
-      >
-        Home
-      </button> */}
 
       {/* Sidebar */}
       <div className="relative z-20">
-
         <Sidebar
           schools={schools}
           selectedSchool={schoolName}
@@ -113,14 +96,6 @@ const SchoolPage = () => {
           onOpenModal={() => setIsModalOpen(true)}
           isLoading={false}
         />
-
-        <button
-        onClick={handleHomeClick}
-        className="absolute top-4 left-4 p-3 bg-blue-600 text-white rounded-full shadow-lg z-[9999]"
-        >
-        Home
-        </button>
-
       </div>
 
       {/* Modal */}

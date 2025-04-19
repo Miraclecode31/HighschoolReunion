@@ -56,7 +56,7 @@ const ImageSlider = ({ images }) => {
   };
 
   return (
-    <div className="filmon z-0 relative">
+    <div className="filmon z-0 relative pointer-events-none">
       <AnimatePresence initial={false} custom={direction}>
         <motion.div
           key={currentIndex}
@@ -89,7 +89,8 @@ const ImageSlider = ({ images }) => {
               className="filmon-image"
             />
 
-            <div className="filmon-image-controls">
+            {/* Updated: Allow pointer events inside controls */}
+            <div className="filmon-image-controls pointer-events-auto z-20">
               <button
                 onClick={() => paginate(-1)}
                 className="filmon-image-arrows p-2 rounded-full bg-black bg-opacity-50 hover:bg-opacity-75 transition-all"

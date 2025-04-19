@@ -1,23 +1,22 @@
-
-.filmon{
+.filmon {
     width: 100vw;
 }
 
-.filmon-image{
+.filmon-image {
     background-color: rgba(0, 0, 0, 0.5);
     filter: brightness(50%);
     width: 100vw;
     height: 110vh;
 }
 
-.filmon-image-container{
+.filmon-image-container {
     width: 100vw;
 }
 
-.filmon-image-container2{
+.filmon-image-container2 {
 }
 
-.filmon-image-controls{
+.filmon-image-controls {
     display: flex;
     justify-content: center;
     width: 100vw;
@@ -25,12 +24,12 @@
     bottom: 200px;
 }
 
-.filmon-image-arrows{
+.filmon-image-arrows {
     background-color: white;
     color: black;
 }
 
-.filmon-image-pagination{
+.filmon-image-pagination {
     width: 20px;
     height: 20px;
     padding: 0px;
@@ -40,30 +39,30 @@
     border-color: white;
 }
 
-.filmon-nav{
+.filmon-nav {
     position: absolute;
-    top:20px;
+    top: 20px;
     left: 20px;
 }
 
-.filmon-nav-container{
+.filmon-nav-container {
     display: flex;
 }
 
-.filmon-nav2{
+.filmon-nav2 {
     position: absolute;
-    top:80px;
+    top: 80px;
     left: 20px;
 }
 
-.filmon-nav2 button{
-    display:block;
+.filmon-nav2 button {
+    display: block;
     margin-top: .7em;
     background-color: white;
     color: black;
 }
 
-.filmon-comment{
+.filmon-comment {
     position: absolute;
     bottom: 400px;
     display: flex;
@@ -74,17 +73,16 @@
     max-height: '200px';
 }
 
-.filmon-comment-input{
+.filmon-comment-input {
     padding: 1.3em;
     border-radius: 24px;
     background-color: white;
     border: none;
-    margin:1em;
+    margin: 1em;
     color: black;
 }
 
-
-.filmon-comment-message{
+.filmon-comment-message {
     background-color: rgba(0, 0, 0, 0.376);
     padding: 1.2em;
     border-radius: 7px;
@@ -92,8 +90,7 @@
     max-width: 400px;
 }
 
-
-.filmon-comment-scroll{
+.filmon-comment-scroll {
     overflow: auto;
     max-height: 400px;
     padding: 1em;
@@ -101,36 +98,34 @@
 
 /* Hide the scrollbar track, show only the thumb */
 .filmon-comment-scroll::-webkit-scrollbar {
-    width: 6px; /* Width of the scrollbar */
-  }
-  
-  .filmon-comment-scroll::-webkit-scrollbar-track {
-    background: transparent; /* Hide track */
-  }
-  
-  .filmon-comment-scroll::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.376); /* Your thumb color */
-    border-radius: 10px;
-  }
-  
-  .filmon-comment-scroll::-webkit-scrollbar-thumb:hover {
+    width: 6px;
+}
+
+.filmon-comment-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.filmon-comment-scroll::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.376);
-  }
-  
-  /* Firefox support */
-  .filmon-comment-scroll {
+    border-radius: 10px;
+}
+
+.filmon-comment-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.376);
+}
+
+.filmon-comment-scroll {
     scrollbar-width: thin;
     scrollbar-color: #888 transparent;
-  }
+}
 
-.filmon-graduate{
+.filmon-graduate {
     position: absolute;
     top: 40px;
     right: 40px;
 }
 
-
-.filmon-graduate-add{
+.filmon-graduate-add {
     background-color: white;
     padding: 1.5em;
     border-radius: 12px;
@@ -141,12 +136,61 @@
     width: 300px;
 }
 
-
-.filmon-graduate-add input{
+.filmon-graduate-add input {
     background-color: white;
     padding: 1em;
     border-radius: 12px;
     color: black;
     margin-bottom: 1em;
     margin-top: 1em;
+}
+
+/* ✅ Make sure slider layers don't block clicks */
+.filmon,
+.filmon-image,
+.filmon-image-container {
+    pointer-events: none;
+}
+
+/* ✅ Allow only controls to be clickable */
+.filmon-image-controls,
+.filmon-image-arrows,
+.filmon-image-pagination,
+.filmon-comment,
+.filmon-graduate,
+.filmon-nav,
+.filmon-nav2 {
+    pointer-events: auto;
+}
+
+/* ============================= */
+/* ✅ ENSURE HOME BUTTON WORKS  */
+/* ============================= */
+
+/* Ensure Home button is interactive */
+#home-button-wrapper {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 99999 !important;
+    pointer-events: auto !important; /* Make the home button clickable */
+}
+
+/* Prevents parent containers from blocking pointer events */
+.filmon,
+.filmon-image,
+.filmon-image-container,
+.filmon-image-container2 {
+    pointer-events: none !important; /* These elements are still non-interactive */
+}
+
+/* Ensure only interactive elements stay clickable */
+.filmon-image-controls,
+.filmon-image-arrows,
+.filmon-image-pagination,
+.filmon-comment,
+.filmon-graduate,
+.filmon-nav,
+.filmon-nav2 {
+    pointer-events: auto !important;
 }
