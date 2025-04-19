@@ -1,41 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Send, ChevronDown, ChevronUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import '../filmon.css'
+import '../filmon.css';
 
-const CommentBox = () => {
+const CommentBox = ({ comments = [] }) => {  // Default to empty array if comments is not provided
     const [comment, setComment] = useState({
-        message:'',
-        school: '' 
+        message: '',
+        school: ''
     });
-    const [comments, setComments] = useState([]);
     const [showComments, setShowComments] = useState(false);
-
-    useEffect(() => {
-        const fetchComments = async () => {
-            try {
-                const response = await fetch('http://localhost:4000/api/user-comments');
-                if (response.ok) {
-                    const data = await response.json();
-                    setComments(data);
-                } else {
-                    console.error('Failed to fetch comments:', response.status);
-                }
-            } catch (error) {
-                console.error('Error fetching comments:', error);
-            }
-        };
-
-        fetchComments();
-    }, []);
 
     const handleChange = (e) => {
         setComment({ ...comment, [e.target.name]: e.target.value });
-      };
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (comment) {
+        if (comment.message && comment.school) {  // Ensure both message and school are provided
             try {
                 const response = await fetch('http://localhost:4000/api/user-comments', {
                     method: 'POST',
@@ -47,8 +28,9 @@ const CommentBox = () => {
 
                 if (response.ok) {
                     const newComment = await response.json();
-                    setComments(prevComments => [newComment, ...prevComments]);
-                    setComment('');
+                    // Optionally, add the new comment to the state to display it immediately
+                    comments.unshift(newComment); // Add the new comment to the top of the list
+                    setComment({ message: '', school: '' }); // Reset the form
                 } else {
                     console.error('Failed to add comment:', response.status);
                 }
@@ -70,8 +52,7 @@ const CommentBox = () => {
                         className="max-w-md mx-auto mb-4"
                     >
                         <div className="filmon-comment-scroll max-h-40 overflow-y-auto">
-            
-                            {comments.length === 0 ? (
+                            {Array.isArray(comments) && comments.length === 0 ? (
                                 <p className="text-center py-2 text-gray-500">No comments yet</p>
                             ) : (
                                 <CommentList comments={comments} />
@@ -92,7 +73,6 @@ const CommentBox = () => {
 
             <div className="max-w-sm mx-auto mb-4">
                 <form onSubmit={handleSubmit} className="flex items-center">
-                    
                     <input
                         type="text"
                         value={comment.message || ''}
@@ -101,7 +81,7 @@ const CommentBox = () => {
                         placeholder="Share your thoughts..."
                         className="filmon-comment-input flex-1 px-3 py-1.5 rounded-full bg-white bg-opacity-90 border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
                     />
-                     <input
+                    <input
                         type="text"
                         value={comment.school || ''}
                         name="school"
@@ -123,9 +103,7 @@ const CommentBox = () => {
 
 const CommentList = ({ comments }) => {
     return (
-        <div
-            className="space-y-1 p-6 bg-neutral-800/60 rounded-lg "
-        >
+        <div className="space-y-1 p-6 bg-neutral-800/60 rounded-lg">
             {comments.map((comment) => (
                 <motion.div
                     key={comment._id}
@@ -133,10 +111,8 @@ const CommentList = ({ comments }) => {
                     animate={{ opacity: 1, y: 0 }}
                     className="p-3 flex justify-between items-start bg-transparent rounded-lg shadow-md border border-gray-300"
                 >
-                    <div className='filmon-comment-container'>
+                    <div className="filmon-comment-container">
                         <p className="filmon-comment-message text-white text-sm">{comment.message}</p>
-{/* <span className="text-[0.6rem] text-white ml-2 opacity-70">{new Date(comment.createdAt).toLocaleString()}</span> */}
-
                     </div>
                 </motion.div>
             ))}

@@ -12,8 +12,8 @@ export const schoolImages = {
         {url: "/pickerington.jpg", alt: "Pickerington"},
         { url: "/pickgrad.jpg", alt: "Pickerington" }
     ],
-    "CCL": [
-      { url: "/ccl.jpg", alt: "CCL" },
-      { url: "/classccl.jpg", alt: "CCL" }
+    "Independence High School": [
+      { url: "/indy.jpg", alt: "Independence" },
+      { url: "/indygrad.jpg.jpg", alt: "Independence" }
     ],
   };

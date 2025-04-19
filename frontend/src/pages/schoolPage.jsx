@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import ImageSlider from '../components/ImageSlider';
-import CommentBox from '../components/commentBox';
+import CommentBox from '../components/commentBox';  // Importing CommentBox
 import GraduateList from '../components/GraduateList';
 import Modal from '../components/Modal';
 import { schoolImages } from '../constants/schoolData';
@@ -20,6 +20,7 @@ const SchoolPage = () => {
   useEffect(() => {
     console.log('School Name:', schoolName);
 
+    // Fetch graduates based on school name
     const fetchSchoolData = async () => {
       try {
         const response = await fetch(`http://localhost:4000/api/graduation-records/school/${encodeURIComponent(schoolName)}`);
@@ -31,11 +32,12 @@ const SchoolPage = () => {
       }
     };
 
+    // Fetch all comments and filter by school
     const fetchComments = async () => {
       try {
         const response = await fetch('http://localhost:4000/api/user-comments');
         const data = await response.json();
-        const filtered = data.filter(comment => comment.school === schoolName);
+        const filtered = data.filter(comment => comment.school === schoolName); // Filter comments for the selected school
         setComments(filtered);
         console.log('Filtered Comments:', filtered);
       } catch (error) {
@@ -43,6 +45,7 @@ const SchoolPage = () => {
       }
     };
 
+    // Fetch all schools (not used directly here but useful for sidebar)
     const fetchSchools = async () => {
       try {
         const response = await fetch('http://localhost:4000/api/graduation-records');
@@ -60,13 +63,12 @@ const SchoolPage = () => {
   }, [schoolName]);
 
   const handleSchoolSelect = (school) => {
-    // Optional: Handle selecting a school
+    // Optional: Handle selecting a school (could navigate or perform other actions)
   };
 
   return (
     <div className="relative h-screen overflow-hidden">
-
-      {/* Home Button as its own component */}
+      {/* Home Button */}
       <HomeButton />
 
       {/* Image Slider */}
@@ -84,12 +86,14 @@ const SchoolPage = () => {
         />
       </div>
 
-      {/* Comment Box and Graduate List */}
+      {/* Comment Box */}
       <div className="relative z-20">
         <div className="absolute bottom-0 left-0 right-0">
-          <CommentBox />
+          {/* Pass filtered comments to CommentBox */}
+          <CommentBox comments={comments} />
         </div>
 
+        {/* Graduate List */}
         <GraduateList
           graduates={graduates}
           selectedSchool={schoolName}
